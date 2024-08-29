@@ -1,0 +1,49 @@
+{% include "header.html" %}
+<!-- Search Start -->
+
+<div class="container-fluid bg-primary my-5 py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Find A Herbal Expert</h5>
+            <h1 class="display-4 mb-4">Discover Trusted Herbal Healthcare Professionals</h1>
+            <h5 class="text-white fw-normal">Embrace the healing power of nature with our curated list of experienced herbal healthcare practitioners. Whether you seek traditional remedies or modern herbal treatments, find the right expert to guide your wellness journey.</h5>
+        </div>
+        <div class="mx-auto" style="width: 100%; max-width: 600px;">
+            <form method="POST" action="{% url "doctorsearch" %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <select name="speciality" class="form-select border-primary w-25" style="height: 60px;">
+                        <option selected>Select Speciality</option>
+                        <option value="Ayurveda">Ayurveda</option>
+                        <option value="Herbal Medicine">Herbal Medicine</option>
+                        <option value="Naturopathy">Naturopathy</option>
+                    </select>
+                    <input type="text" name="city" class="form-control border-primary" placeholder="Search by City" style="width: 25%;">
+                    <button class="btn btn-dark border-0" style="width: 25%;">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="mt-5">
+            <h3 class="text-center text-white">Search Results</h3>
+            <div class="row">
+                {% for doctor in doctors %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doctor.name }}</h5>
+                            <p class="card-text">Speciality: {{ doctor.speciality }}</p>
+                            <p class="card-text">City: {{ doctor.city }}</p>
+                            <p class="card-text">Contact: {{ doctor.contact_info }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-white text-center">No doctors found matching your criteria.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% include "footer.html" %}
